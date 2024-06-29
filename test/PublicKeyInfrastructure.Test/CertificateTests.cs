@@ -10,8 +10,8 @@ public class CertificateTests
 {
     private AsymmetricCipherKeyPair keyPair;
     private X509Certificate certificate;
-    private const string pemPath = "test_certificate.pem";
-    private const string derPath = "test_certificate.der";
+    private const string pemPath = "D:/test_certificate.pem";
+    private const string derPath = "D:/test_certificate.der";
 
     [SetUp]
     public void Setup()
