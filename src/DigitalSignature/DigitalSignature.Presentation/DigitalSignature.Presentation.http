@@ -1,0 +1,6 @@
+@DigitalSignature.Presentation_HostAddress = http://localhost:5145
+
+GET {{DigitalSignature.Presentation_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

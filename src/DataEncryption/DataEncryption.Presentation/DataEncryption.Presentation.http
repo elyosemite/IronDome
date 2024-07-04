@@ -1,0 +1,6 @@
+@DataEncryption.Presentation_HostAddress = http://localhost:5111
+
+GET {{DataEncryption.Presentation_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
