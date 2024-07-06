@@ -11,4 +11,8 @@
     <PackageReference Include="BouncyCastle.NetCore" Version="2.2.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CertificationAuthority.Domain\CertificationAuthority.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

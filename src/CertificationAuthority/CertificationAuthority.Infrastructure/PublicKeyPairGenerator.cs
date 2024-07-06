@@ -1,8 +1,9 @@
-﻿using Org.BouncyCastle.Crypto;
+﻿using System.Text;
+using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Generators;
+using Org.BouncyCastle.OpenSsl;
 using Org.BouncyCastle.Pkcs;
 using Org.BouncyCastle.Security;
-using Org.BouncyCastle.X509;
 
 namespace CertificationAuthority.Infrastructure;
 
@@ -15,13 +16,22 @@ public class PublicKeyPairGenerator : IPublicKeyPairGenerator
         keyPairGenerator.Init(keyGenerationParameters);
         var keyPair = keyPairGenerator.GenerateKeyPair();
 
-        var publicKeyInfo = SubjectPublicKeyInfoFactory.CreateSubjectPublicKeyInfo(keyPair.Public);
-        byte[] publicKey = publicKeyInfo.ToAsn1Object().GetDerEncoded();
+        byte[] publicKey = ConvertToPem(keyPair.Public);
 
         var privateKeyInfo = PrivateKeyInfoFactory.CreatePrivateKeyInfo(keyPair.Private);
         byte[] privateKey = privateKeyInfo.ToAsn1Object().GetDerEncoded();
 
 
         return new PublicKeyPair(publicKey, privateKey);
+    }
+
+    private byte[] ConvertToPem(AsymmetricKeyParameter key)
+    {
+        using (var stringWriter = new StringWriter())
+        {
+            var pemWriter = new PemWriter(stringWriter);
+            pemWriter.WriteObject(key);
+            return Encoding.UTF8.GetBytes(stringWriter.ToString());
+        }
     }
 }

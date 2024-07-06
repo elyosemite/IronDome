@@ -2,7 +2,7 @@
 using CertificationAuthority.Infrastructure;
 using Moq;
 
-namespace CertificationAuthority.Test;
+namespace CertificationAuthority.Test.UnitTest;
 
 public class CreatePublicPrivateKeyPairHandlerTests
 {
