@@ -20,10 +20,14 @@ public class PKICertificate : EntityBase<Guid>, ICertificate
 
     public PKICertificate(string issuerDN, string serialNumber, DateTime notBefore, DateTime notAfter, string subjectDN, string publicKey, string signatureAlgorithm) : this()
     {
-        IssuerDN = issuerDN;
-        SerialNumber = serialNumber;
         NotBefore = notBefore;
         NotAfter = notAfter;
+
+        var inconsistentDatesSpec = new InconsistentSpec();
+        if (!inconsistentDatesSpec.IsSatisfiedBy(this)) throw new InvalidOperationException("Inconsistent Dates");
+
+        SerialNumber = serialNumber;
+        IssuerDN = issuerDN;
         SubjectDN = subjectDN;
         PublicKey = publicKey;
         SignatureAlgorithm = signatureAlgorithm;
