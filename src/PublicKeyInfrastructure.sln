@@ -5,51 +5,48 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CertificationAuthority", "CertificationAuthority", "{E8D3B230-03C5-4125-86BE-23919FEA2DCD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CertificationAuthority.Application", "CertificationAuthority\CertificationAuthority.Application\CertificationAuthority.Application.csproj", "{FAD5E50C-BCA7-42D7-AAA0-B468F4EC1D2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CertificationAuthority.Application", "CertificationAuthority\CertificationAuthority.Application\CertificationAuthority.Application.csproj", "{FAD5E50C-BCA7-42D7-AAA0-B468F4EC1D2F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataEncryption", "DataEncryption", "{4AF8E161-4359-479F-8F40-CA6868D4B897}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataEncryption.Domain", "DataEncryption\DataEncryption.Domain\DataEncryption.Domain.csproj", "{BA39047B-D000-4789-AFED-F79984225E6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataEncryption.Domain", "DataEncryption\DataEncryption.Domain\DataEncryption.Domain.csproj", "{BA39047B-D000-4789-AFED-F79984225E6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataEncryption.Infrastructure", "DataEncryption\DataEncryption.Infrastructure\DataEncryption.Infrastructure.csproj", "{DDA7D72E-88FE-431F-A47E-82F80A544054}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataEncryption.Infrastructure", "DataEncryption\DataEncryption.Infrastructure\DataEncryption.Infrastructure.csproj", "{DDA7D72E-88FE-431F-A47E-82F80A544054}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CertificationAuthority.Domain", "CertificationAuthority\CertificationAuthority.Domain\CertificationAuthority.Domain.csproj", "{4348DA5F-0E5E-485A-884A-463A3DB2F353}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CertificationAuthority.Domain", "CertificationAuthority\CertificationAuthority.Domain\CertificationAuthority.Domain.csproj", "{4348DA5F-0E5E-485A-884A-463A3DB2F353}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CertificationAuthority.Infrastructure", "CertificationAuthority\CertificationAuthority.Infrastructure\CertificationAuthority.Infrastructure.csproj", "{68A1A551-9CB2-4047-AF2F-CD7773539163}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CertificationAuthority.Infrastructure", "CertificationAuthority\CertificationAuthority.Infrastructure\CertificationAuthority.Infrastructure.csproj", "{68A1A551-9CB2-4047-AF2F-CD7773539163}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CertificationAuthority.Presentation", "CertificationAuthority\CertificationAuthority.Presentation\CertificationAuthority.Presentation.csproj", "{72A9F57C-6443-4375-8A4F-3E59A4DC88C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CertificationAuthority.Presentation", "CertificationAuthority\CertificationAuthority.Presentation\CertificationAuthority.Presentation.csproj", "{72A9F57C-6443-4375-8A4F-3E59A4DC88C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CertificationAuthority.Test", "CertificationAuthority\CertificationAuthority.Test\CertificationAuthority.Test.csproj", "{E595B06B-7C53-4214-B10E-3BCAC5309A99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CertificationAuthority.Test", "CertificationAuthority\CertificationAuthority.Test\CertificationAuthority.Test.csproj", "{E595B06B-7C53-4214-B10E-3BCAC5309A99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataEncryption.Application", "DataEncryption\DataEncryption.Application\DataEncryption.Application.csproj", "{95D2AADE-FC2A-45D8-89BF-A9E15CC57AB5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataEncryption.Application", "DataEncryption\DataEncryption.Application\DataEncryption.Application.csproj", "{95D2AADE-FC2A-45D8-89BF-A9E15CC57AB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataEncryption.Presentation", "DataEncryption\DataEncryption.Presentation\DataEncryption.Presentation.csproj", "{BC56D615-06A6-42AE-AE02-2ED8E53B55CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataEncryption.Presentation", "DataEncryption\DataEncryption.Presentation\DataEncryption.Presentation.csproj", "{BC56D615-06A6-42AE-AE02-2ED8E53B55CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataEncryption.Test", "DataEncryption\DataEncryption.Test\DataEncryption.Test.csproj", "{E8D5677E-9BD7-43D2-9754-728AAED8EC83}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataEncryption.Test", "DataEncryption\DataEncryption.Test\DataEncryption.Test.csproj", "{E8D5677E-9BD7-43D2-9754-728AAED8EC83}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DigitalSignature", "DigitalSignature", "{674172CD-188A-4B13-B9CD-64FBBB5709DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalSignature.Application", "DigitalSignature\DigitalSignature.Application\DigitalSignature.Application.csproj", "{5C5426B6-ABF3-45BF-AFDF-E5C9D9D3A155}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalSignature.Application", "DigitalSignature\DigitalSignature.Application\DigitalSignature.Application.csproj", "{5C5426B6-ABF3-45BF-AFDF-E5C9D9D3A155}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalSignature.Domain", "DigitalSignature\DigitalSignature.Domain\DigitalSignature.Domain.csproj", "{D933F94E-98C3-4221-BE53-7FC70D703EBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalSignature.Domain", "DigitalSignature\DigitalSignature.Domain\DigitalSignature.Domain.csproj", "{D933F94E-98C3-4221-BE53-7FC70D703EBC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalSignature.Infrastructure", "DigitalSignature\DigitalSignature.Infrastructure\DigitalSignature.Infrastructure.csproj", "{961C8C8B-DAA2-401B-93E3-901E677EAE4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalSignature.Infrastructure", "DigitalSignature\DigitalSignature.Infrastructure\DigitalSignature.Infrastructure.csproj", "{961C8C8B-DAA2-401B-93E3-901E677EAE4D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalSignature.Presentation", "DigitalSignature\DigitalSignature.Presentation\DigitalSignature.Presentation.csproj", "{80F68433-A768-4D70-A7A2-7BD77DDB6CD1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalSignature.Presentation", "DigitalSignature\DigitalSignature.Presentation\DigitalSignature.Presentation.csproj", "{80F68433-A768-4D70-A7A2-7BD77DDB6CD1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalSignature.Test", "DigitalSignature\DigitalSignature.Test\DigitalSignature.Test.csproj", "{69AA5C19-A888-43BC-AE68-F6B582DDBC35}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalSignature.Test", "DigitalSignature\DigitalSignature.Test\DigitalSignature.Test.csproj", "{69AA5C19-A888-43BC-AE68-F6B582DDBC35}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedKernel", "SharedKernel", "{5D335DCE-6411-42A2-BE25-8F6A47B45720}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PublicKeyInfrastructure.SharedKernel", "SharedKernel\PublicKeyInfrastructure.SharedKernel\PublicKeyInfrastructure.SharedKernel.csproj", "{C3F592CB-3357-4951-83B0-72F71217B084}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PublicKeyInfrastructure.SharedKernel", "SharedKernel\PublicKeyInfrastructure.SharedKernel\PublicKeyInfrastructure.SharedKernel.csproj", "{C3F592CB-3357-4951-83B0-72F71217B084}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{FAD5E50C-BCA7-42D7-AAA0-B468F4EC1D2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -117,6 +114,9 @@ Global
 		{C3F592CB-3357-4951-83B0-72F71217B084}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3F592CB-3357-4951-83B0-72F71217B084}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{FAD5E50C-BCA7-42D7-AAA0-B468F4EC1D2F} = {E8D3B230-03C5-4125-86BE-23919FEA2DCD}
 		{BA39047B-D000-4789-AFED-F79984225E6A} = {4AF8E161-4359-479F-8F40-CA6868D4B897}
@@ -134,5 +134,8 @@ Global
 		{80F68433-A768-4D70-A7A2-7BD77DDB6CD1} = {674172CD-188A-4B13-B9CD-64FBBB5709DB}
 		{69AA5C19-A888-43BC-AE68-F6B582DDBC35} = {674172CD-188A-4B13-B9CD-64FBBB5709DB}
 		{C3F592CB-3357-4951-83B0-72F71217B084} = {5D335DCE-6411-42A2-BE25-8F6A47B45720}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {431B0BFA-1FA0-4C28-8528-72B39C50F4E8}
 	EndGlobalSection
 EndGlobal
