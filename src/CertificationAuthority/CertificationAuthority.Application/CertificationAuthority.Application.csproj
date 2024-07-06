@@ -7,4 +7,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\SharedKernel\PublicKeyInfrastructure.SharedKernel\PublicKeyInfrastructure.SharedKernel.csproj" />
+    <ProjectReference Include="..\CertificationAuthority.Infrastructure\CertificationAuthority.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
