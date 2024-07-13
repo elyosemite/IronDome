@@ -14,11 +14,11 @@ public class CertificateGenerator : ICertificateGenerator
     {
         var certificate = new X509V3CertificateGenerator();
         certificate.SetSerialNumber(BigInteger.ProbablePrime(120, new Random()));
-        certificate.SetSubjectDN(new X509Name(pkiCertificate.SubjectDN));
-        certificate.SetIssuerDN(new X509Name(pkiCertificate.IssuerDN));
+        certificate.SetSubjectDN(new X509Name(pkiCertificate.SubjectDN.Value));
+        certificate.SetIssuerDN(new X509Name(pkiCertificate.IssuerDN.Value));
         certificate.SetNotBefore(pkiCertificate.NotBefore);
         certificate.SetNotAfter(pkiCertificate.NotAfter);
-        certificate.SetPublicKey(PublicKeyFactory.CreateKey(Encoding.UTF8.GetBytes(pkiCertificate.PublicKey)));
+        certificate.SetPublicKey(PublicKeyFactory.CreateKey(Encoding.UTF8.GetBytes(pkiCertificate.PublicKey.Value)));
 
         var signatureFactory = new Asn1SignatureFactory("SHA256WithRSA", PrivateKeyFactory.CreateKey(senderPrivateKey));
 

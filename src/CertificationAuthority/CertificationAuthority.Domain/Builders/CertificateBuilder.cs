@@ -1,4 +1,5 @@
 ﻿using CertificationAuthority.Domain.Certificate;
+using CertificationAuthority.Domain.Enumerations;
 using CertificationAuthority.Domain.Factories;
 
 namespace CertificationAuthority.Domain.Builders;
@@ -12,12 +13,18 @@ public class CertificateBuilder : ICertificateBuilder
     private DateTime _notAfter;
     private string _subjectDN = string.Empty;
     private string _publicKey = string.Empty;
-    private string _signatureAlgorithm = string.Empty;
+    private SignatureAlgorithmEnum _signatureAlgorithm = SignatureAlgorithmEnum.SHA256WithRSA;
 
     /// <summary>
     /// It will be useful when it is necessary to reassembly an instance from the database with identifier
     /// </summary>
     private bool _isInstanceReassembly = false;
+    private readonly ICertificateFactory _certificateFactory;
+
+    public CertificateBuilder(ICertificateFactory certificateFactory)
+    {
+        _certificateFactory = certificateFactory;
+    }
 
     public ICertificateBuilder WithIdentifier(Guid identifier)
     {
@@ -56,7 +63,7 @@ public class CertificateBuilder : ICertificateBuilder
         return this;
     }
 
-    public ICertificateBuilder WithSignatureAlgorithm(string signatureAlgorithm)
+    public ICertificateBuilder WithSignatureAlgorithm(SignatureAlgorithmEnum signatureAlgorithm)
     {
         _signatureAlgorithm = signatureAlgorithm;
         return this;
@@ -72,9 +79,9 @@ public class CertificateBuilder : ICertificateBuilder
     {
         if (_isInstanceReassembly)
         {
-            return new PKICertificateFactory().Factory(_identifier, _issuerDN, _serialNumber, _notBefore, _notAfter, _subjectDN, _publicKey, _signatureAlgorithm);
+            return _certificateFactory.Factory(_identifier, _issuerDN, _serialNumber, _notBefore, _notAfter, _subjectDN, _publicKey, _signatureAlgorithm);
         }
 
-        return new PKICertificateFactory().Factory(_issuerDN, _serialNumber, _notBefore, _notAfter, _subjectDN, _publicKey, _signatureAlgorithm);
+        return _certificateFactory.Factory(_issuerDN, _serialNumber, _notBefore, _notAfter, _subjectDN, _publicKey, _signatureAlgorithm);
     }
 }

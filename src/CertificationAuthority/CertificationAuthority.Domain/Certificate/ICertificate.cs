@@ -1,12 +1,14 @@
-﻿namespace CertificationAuthority.Domain.Certificate;
+﻿using CertificationAuthority.Domain.ValueObjects;
+
+namespace CertificationAuthority.Domain.Certificate;
 
 public interface ICertificate
 {
-    string IssuerDN { get; }
-    string SerialNumber { get; }
+    IssuerDN IssuerDN { get; }
+    SerialNumber SerialNumber { get; }
     DateTime NotBefore { get; }
     DateTime NotAfter { get; }
-    string SubjectDN { get; }
-    string PublicKey { get; }
-    string SignatureAlgorithm { get; }
+    SubjectDN SubjectDN { get; }
+    PublicKey PublicKey { get; }
+    SignatureAlgorithm SignatureAlgorithm { get; }
 }

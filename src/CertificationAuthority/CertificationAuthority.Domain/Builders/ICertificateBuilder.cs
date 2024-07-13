@@ -1,4 +1,5 @@
 ﻿using CertificationAuthority.Domain.Certificate;
+using CertificationAuthority.Domain.Enumerations;
 
 namespace CertificationAuthority.Domain.Builders;
 
@@ -11,6 +12,6 @@ public interface ICertificateBuilder
     ICertificateBuilder WithNotAfter(DateTime notAfter);
     ICertificateBuilder WithSubjectDN(string subjectDN);
     ICertificateBuilder WithPublicKey(string publicKey);
-    ICertificateBuilder WithSignatureAlgorithm(string signatureAlgorithm);
+    ICertificateBuilder WithSignatureAlgorithm(SignatureAlgorithmEnum signatureAlgorithm);
     PKICertificate Build();
 }

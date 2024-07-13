@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using CertificationAuthority.Application.UseCases.CreateCertificate;
 using CertificationAuthority.Domain.Builders;
+using CertificationAuthority.Domain.Enumerations;
 using CertificationAuthority.Domain.Factories;
 using CertificationAuthority.Infrastructure;
 using Moq;
@@ -32,7 +33,7 @@ public class CreateCertificateHandlerTests
             NotBefore: DateTime.UtcNow,
             NotAfter: DateTime.UtcNow.AddYears(1),
             PublicKey: "publicKey",
-            SignatureAlgorithm: "SHA256WithRSA",
+            SignatureAlgorithm: SignatureAlgorithmEnum.SHA256WithRSA,
             SenderPrivateKey: "privateKey"
         );
 
@@ -55,7 +56,7 @@ public class CreateCertificateHandlerTests
             .WithNotBefore(It.IsAny<DateTime>())
             .WithNotAfter(It.IsAny<DateTime>())
             .WithPublicKey(It.IsAny<string>())
-            .WithSignatureAlgorithm(It.IsAny<string>())
+            .WithSignatureAlgorithm(It.IsAny<SignatureAlgorithmEnum>())
             .Build())
             .Returns(domainCertificate);
 
@@ -86,7 +87,7 @@ public class CreateCertificateHandlerTests
                 SubjectDN: "CN=Subject",
                 PublicKey: "publicKey",
                 SenderPrivateKey: "privateKey",
-                SignatureAlgorithm: "SHA256WithRSA"
+                SignatureAlgorithm: SignatureAlgorithmEnum.SHA256WithRSA
             );
 
         _mockCertificateBuilder.Setup(cb => cb
@@ -96,7 +97,7 @@ public class CreateCertificateHandlerTests
             .WithNotBefore(It.IsAny<DateTime>())
             .WithNotAfter(It.IsAny<DateTime>())
             .WithPublicKey(It.IsAny<string>())
-            .WithSignatureAlgorithm(It.IsAny<string>())
+            .WithSignatureAlgorithm(It.IsAny<SignatureAlgorithmEnum>())
             .Build())
             .Throws(new InvalidOperationException("Builder failed"));
 

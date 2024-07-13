@@ -1,35 +1,38 @@
 using CertificationAuthority.Domain.Builders;
+using CertificationAuthority.Domain.Enumerations;
 using CertificationAuthority.Domain.Factories;
 
 namespace CertificationAuthority.Test.UnitTest;
 
 public class Tests
 {
+    private readonly PKICertificateFactory _certificateFactory = new();
+
     [Test]
     public void CreateCertificate_UsingFactory_ReturnsValidCertificate()
     {
         // Arrange
-        var factory = new PKICertificateFactory();
+        var factory = _certificateFactory;
         var issuerDN = "CN=Issuer";
         var serialNumber = "123456789";
         var notBefore = DateTime.UtcNow;
         var notAfter = DateTime.UtcNow.AddYears(1);
         var subjectDN = "CN=Subject";
         var publicKey = "PublicKey";
-        var signatureAlgorithm = "SHA256WithRSA";
+        var signatureAlgorithm = SignatureAlgorithmEnum.SHA256WithRSA;
 
         // Act
         var certificate = factory.Factory(issuerDN, serialNumber, notBefore, notAfter, subjectDN, publicKey, signatureAlgorithm);
 
         // Assert
         Assert.IsNotNull(certificate);
-        Assert.That(issuerDN, Is.EqualTo(certificate.IssuerDN));
-        Assert.That(serialNumber, Is.EqualTo(certificate.SerialNumber));
+        Assert.That(issuerDN, Is.EqualTo(certificate.IssuerDN.Value));
+        Assert.That(serialNumber, Is.EqualTo(certificate.SerialNumber.Value));
         Assert.That(notBefore, Is.EqualTo(certificate.NotBefore));
         Assert.That(notAfter, Is.EqualTo(certificate.NotAfter));
-        Assert.That(subjectDN, Is.EqualTo(certificate.SubjectDN));
-        Assert.That(publicKey, Is.EqualTo(certificate.PublicKey));
-        Assert.That(signatureAlgorithm, Is.EqualTo(certificate.SignatureAlgorithm));
+        Assert.That(subjectDN, Is.EqualTo(certificate.SubjectDN.Value));
+        Assert.That(publicKey, Is.EqualTo(certificate.PublicKey.Value));
+        Assert.That(signatureAlgorithm, Is.EqualTo(certificate.SignatureAlgorithm.Value));
     }
 
     [Test]
@@ -44,7 +47,7 @@ public class Tests
         var notAfter = DateTime.UtcNow.AddYears(1);
         var subjectDN = "CN=Subject";
         var publicKey = "PublicKey";
-        var signatureAlgorithm = "SHA256WithRSA";
+        var signatureAlgorithm = SignatureAlgorithmEnum.SHA256WithRSA;
 
         // Act
         var certificate = factory.Factory(id, issuerDN, serialNumber, notBefore, notAfter, subjectDN, publicKey, signatureAlgorithm);
@@ -52,27 +55,27 @@ public class Tests
         // Assert
         Assert.IsNotNull(certificate);
         Assert.That(id, Is.EqualTo(certificate.Id));
-        Assert.That(issuerDN, Is.EqualTo(certificate.IssuerDN));
-        Assert.That(serialNumber, Is.EqualTo(certificate.SerialNumber));
+        Assert.That(issuerDN, Is.EqualTo(certificate.IssuerDN.Value));
+        Assert.That(serialNumber, Is.EqualTo(certificate.SerialNumber.Value));
         Assert.That(notBefore, Is.EqualTo(certificate.NotBefore));
         Assert.That(notAfter, Is.EqualTo(certificate.NotAfter));
-        Assert.That(subjectDN, Is.EqualTo(certificate.SubjectDN));
-        Assert.That(publicKey, Is.EqualTo(certificate.PublicKey));
-        Assert.That(signatureAlgorithm, Is.EqualTo(certificate.SignatureAlgorithm));
+        Assert.That(subjectDN, Is.EqualTo(certificate.SubjectDN.Value));
+        Assert.That(publicKey, Is.EqualTo(certificate.PublicKey.Value));
+        Assert.That(signatureAlgorithm, Is.EqualTo(certificate.SignatureAlgorithm.Value));
     }
 
     [Test]
     public void CreateCertificate_UsingBuilder_ReturnsValidCertificate()
     {
         // Arrange
-        var builder = new CertificateBuilder();
+        var builder = new CertificateBuilder(_certificateFactory);
         var issuerDN = "CN=Issuer";
         var serialNumber = "123456789";
         var notBefore = DateTime.UtcNow;
         var notAfter = DateTime.UtcNow.AddYears(1);
         var subjectDN = "CN=Subject";
         var publicKey = "PublicKey";
-        var signatureAlgorithm = "SHA256WithRSA";
+        var signatureAlgorithm = SignatureAlgorithmEnum.SHA256WithRSA;
 
         // Act
         var certificate = builder.WithIssuerDN(issuerDN)
@@ -86,20 +89,20 @@ public class Tests
 
         // Assert
         Assert.IsNotNull(certificate);
-        Assert.That(issuerDN, Is.EqualTo(certificate.IssuerDN));
-        Assert.That(serialNumber, Is.EqualTo(certificate.SerialNumber));
+        Assert.That(issuerDN, Is.EqualTo(certificate.IssuerDN.Value));
+        Assert.That(serialNumber, Is.EqualTo(certificate.SerialNumber.Value));
         Assert.That(notBefore, Is.EqualTo(certificate.NotBefore));
         Assert.That(notAfter, Is.EqualTo(certificate.NotAfter));
-        Assert.That(subjectDN, Is.EqualTo(certificate.SubjectDN));
-        Assert.That(publicKey, Is.EqualTo(certificate.PublicKey));
-        Assert.That(signatureAlgorithm, Is.EqualTo(certificate.SignatureAlgorithm));
+        Assert.That(subjectDN, Is.EqualTo(certificate.SubjectDN.Value));
+        Assert.That(publicKey, Is.EqualTo(certificate.PublicKey.Value));
+        Assert.That(signatureAlgorithm, Is.EqualTo(certificate.SignatureAlgorithm.Value));
     }
 
     [Test]
     public void CreateCertificate_WithIdentifier_UsingBuilder_ReturnsValidCertificate()
     {
         // Arrange
-        var builder = new CertificateBuilder();
+        var builder = new CertificateBuilder(_certificateFactory);
         var id = Guid.NewGuid();
         var issuerDN = "CN=Issuer";
         var serialNumber = "123456789";
@@ -107,7 +110,7 @@ public class Tests
         var notAfter = DateTime.UtcNow.AddYears(1);
         var subjectDN = "CN=Subject";
         var publicKey = "PublicKey";
-        var signatureAlgorithm = "SHA256WithRSA";
+        var signatureAlgorithm = SignatureAlgorithmEnum.SHA256WithRSA;
 
         // Act
         var certificate = builder.WithIdentifier(id)
@@ -123,13 +126,13 @@ public class Tests
         // Assert
         Assert.IsNotNull(certificate);
         Assert.That(id, Is.EqualTo(certificate.Id));
-        Assert.That(issuerDN, Is.EqualTo(certificate.IssuerDN));
-        Assert.That(serialNumber, Is.EqualTo(certificate.SerialNumber));
+        Assert.That(issuerDN, Is.EqualTo(certificate.IssuerDN.Value));
+        Assert.That(serialNumber, Is.EqualTo(certificate.SerialNumber.Value));
         Assert.That(notBefore, Is.EqualTo(certificate.NotBefore));
         Assert.That(notAfter, Is.EqualTo(certificate.NotAfter));
-        Assert.That(subjectDN, Is.EqualTo(certificate.SubjectDN));
-        Assert.That(publicKey, Is.EqualTo(certificate.PublicKey));
-        Assert.That(signatureAlgorithm, Is.EqualTo(certificate.SignatureAlgorithm));
+        Assert.That(subjectDN, Is.EqualTo(certificate.SubjectDN.Value));
+        Assert.That(publicKey, Is.EqualTo(certificate.PublicKey.Value));
+        Assert.That(signatureAlgorithm, Is.EqualTo(certificate.SignatureAlgorithm.Value));
     }
 
     [Test]
@@ -143,7 +146,7 @@ public class Tests
         var notAfter = DateTime.UtcNow.AddYears(-1); // Invalid: notAfter is before notBefore
         var subjectDN = "CN=Subject";
         var publicKey = "PublicKey";
-        var signatureAlgorithm = "SHA256WithRSA";
+        var signatureAlgorithm = SignatureAlgorithmEnum.SHA256WithRSA;
 
         // Act & Assert
         Assert.Throws<InvalidOperationException>(() =>

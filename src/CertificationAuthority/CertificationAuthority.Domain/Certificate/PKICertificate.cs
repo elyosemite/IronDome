@@ -1,41 +1,50 @@
 ﻿using Ardalis.SharedKernel;
+using CertificationAuthority.Domain.Enumerations;
+using CertificationAuthority.Domain.ValueObjects;
 
 namespace CertificationAuthority.Domain.Certificate;
 
 //TODO - Cuidado com a obsessão por tipos primitivos
+// AggregateRoot com Repository do DDD (Eric Evans e Vaughn Vernon)
 public class PKICertificate : EntityBase<Guid>, ICertificate
 {
-    public string IssuerDN { get; private set; }
-    public string SerialNumber { get; private set; }
-    public DateTime NotBefore { get; private set; }
-    public DateTime NotAfter { get; private set;  }
-    public string SubjectDN { get; private set; }
-    public string PublicKey { get; private set; }
-    public string SignatureAlgorithm { get; private set; } // "SHA256WithRSA";
+    public IssuerDN IssuerDN { get; }
+    public SerialNumber SerialNumber { get; }
+    public DateTime NotBefore { get; }
+    public DateTime NotAfter { get;  }
+    public SubjectDN SubjectDN { get; }
+    public PublicKey PublicKey { get; }
+    public SignatureAlgorithm SignatureAlgorithm { get; } // TODO - "SHA256WithRSA"; Smart Enums do DDD
 
-    private PKICertificate()
+    public PKICertificate(string issuerDN, string serialNumber, DateTime notBefore, DateTime notAfter, string subjectDN, string publicKey, SignatureAlgorithmEnum signatureAlgorithm)
     {
         Id = Guid.NewGuid();
-    }
-
-    public PKICertificate(string issuerDN, string serialNumber, DateTime notBefore, DateTime notAfter, string subjectDN, string publicKey, string signatureAlgorithm) : this()
-    {
         NotBefore = notBefore;
         NotAfter = notAfter;
 
-        var inconsistentDatesSpec = new InconsistentSpec();
+        var inconsistentDatesSpec = new InconsistentSpec(); // Specification Pattern do DDD
         if (!inconsistentDatesSpec.IsSatisfiedBy(this)) throw new InvalidOperationException("Inconsistent Dates");
 
-        SerialNumber = serialNumber;
-        IssuerDN = issuerDN;
-        SubjectDN = subjectDN;
-        PublicKey = publicKey;
-        SignatureAlgorithm = signatureAlgorithm;
+        SerialNumber = new SerialNumber(serialNumber);
+        IssuerDN = new IssuerDN(issuerDN);
+        SubjectDN = new SubjectDN(subjectDN);
+        PublicKey = new PublicKey(publicKey);
+        SignatureAlgorithm = new SignatureAlgorithm(signatureAlgorithm);
     }
 
-    public PKICertificate(Guid identifier, string issuerDN, string serialNumber, DateTime notBefore, DateTime notAfter, string subjectDN, string publicKey, string signatureAlgorithm)
-        : this(issuerDN, serialNumber, notBefore, notAfter, subjectDN, publicKey, signatureAlgorithm)
+    public PKICertificate(Guid identifier, string issuerDN, string serialNumber, DateTime notBefore, DateTime notAfter, string subjectDN, string publicKey, SignatureAlgorithmEnum signatureAlgorithm)
     {
         Id = identifier;
+        NotBefore = notBefore;
+        NotAfter = notAfter;
+
+        var inconsistentDatesSpec = new InconsistentSpec(); // Specification Pattern do DDD
+        if (!inconsistentDatesSpec.IsSatisfiedBy(this)) throw new InvalidOperationException("Inconsistent Dates");
+
+        SerialNumber = new SerialNumber(serialNumber);
+        IssuerDN = new IssuerDN(issuerDN);
+        SubjectDN = new SubjectDN(subjectDN);
+        PublicKey = new PublicKey(publicKey);
+        SignatureAlgorithm = new SignatureAlgorithm(signatureAlgorithm);
     }
 }

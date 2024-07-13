@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using CertificationAuthority.Domain.Enumerations;
+using MediatR;
 
 namespace CertificationAuthority.Application.UseCases.CreateCertificate;
 
@@ -10,4 +11,4 @@ public record CreateCertificateRequest(
     string SubjectDN, 
     string PublicKey,
     string SenderPrivateKey,
-    string SignatureAlgorithm) : IRequest<CreateCertificateResponse>;
+    SignatureAlgorithmEnum SignatureAlgorithm) : IRequest<CreateCertificateResponse>;

@@ -27,6 +27,7 @@ public class CreateCertificateHandler : IRequestHandler<CreateCertificateRequest
             .WithPublicKey(request.PublicKey)
             .WithSignatureAlgorithm(request.SignatureAlgorithm)
             .Build();
+            
         var senderPrivateKey = Encoding.UTF8.GetBytes(request.SenderPrivateKey);
         var certificate = _certificateGenerator.X509CreateCertificate(domainCertificate, senderPrivateKey);
 
