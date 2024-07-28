@@ -15,8 +15,4 @@
     <ProjectReference Include="..\CertificationAuthority.Domain\CertificationAuthority.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Ports\" />
-  </ItemGroup>
-
 </Project>

@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CertificationAuthority.Application.UseCases.CreateCertificate;
 
-public class CreateCertificateHandler : IRequestHandler<CreateCertificateRequest, CreateCertificateResponse>
+public sealed class CreateCertificateHandler : IRequestHandler<CreateCertificateRequest, CreateCertificateResponse>
 {
     private readonly ICertificateGenerator _certificateGenerator;
     private readonly ICertificateBuilder _certificateBuilder;

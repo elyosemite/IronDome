@@ -2,6 +2,8 @@ using System.IO.Compression;
 using CertificationAuthority.Application;
 using CertificationAuthority.Application.UseCases.CreatePublicPrivateKeyPair;
 using MediatR;
+using PublicKeyInfrastructure.SharedKernel.Logging;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplicationServices();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+
+builder.Services.AddLoggingConfiguration(builder.Configuration);
+builder.Host.UseSerilogWithConfiguration();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -17,6 +23,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
 
 app.MapGet("/key-pair", async (IMediator mediator) =>
@@ -48,4 +55,16 @@ app.MapGet("/key-pair", async (IMediator mediator) =>
 .WithName("KeyPair")
 .WithOpenApi();
 
-app.Run();
+try
+{
+    Log.Information("Starting web host");
+    app.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Host terminated unexpectedly");
+}
+finally
+{
+    Log.CloseAndFlush();
+}
