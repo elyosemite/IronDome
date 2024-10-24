@@ -7,11 +7,10 @@ namespace PublicKeyInfrastructure.SharedKernel.Logging;
 
 public static class LoggingExtensions
 {
-    public static void AddLoggingConfiguration(this IServiceCollection builder, IConfigurationBuilder configurationBuilder)
+    public static void AddLoggingConfiguration(this IServiceCollection builder, IConfiguration configuration)
     {
         builder.AddLogging();
-        configurationBuilder.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-        LoggingConfiguration.Logging(configurationBuilder.Build());
+        LoggingConfiguration.Logging(configuration);
     }
 
     public static void UseSerilogWithConfiguration(this IHostBuilder hostBuilder)

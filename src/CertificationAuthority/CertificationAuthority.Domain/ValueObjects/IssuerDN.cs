@@ -8,7 +8,7 @@ public struct IssuerDN : IEquatable<IssuerDN>
     {
         if (string.IsNullOrEmpty(value)) throw new ArgumentNullException("IssuerDN value can not be null ou empty.");
 
-        Value = value;        
+        Value = $"DN={value}";
     }
 
     public bool Equals(IssuerDN other)

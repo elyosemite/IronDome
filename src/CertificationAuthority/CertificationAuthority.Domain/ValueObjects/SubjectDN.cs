@@ -8,7 +8,7 @@ public struct SubjectDN : IEquatable<SubjectDN>
     {
         if (string.IsNullOrEmpty(value)) throw new ArgumentNullException("SubjectDN value can not be null ou empty.");
 
-        Value = value;
+        Value = $"CN={value}";
     }
 
     public bool Equals(SubjectDN other)
