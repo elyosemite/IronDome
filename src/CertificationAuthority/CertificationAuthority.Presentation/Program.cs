@@ -2,8 +2,12 @@ using CertificationAuthority.Application;
 using CertificationAuthority.Presentation.Endpoints;
 using PublicKeyInfrastructure.SharedKernel.Logging;
 using Serilog;
+using Observability;
+using CertificationAuthority.Presentation;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.AddServiceDefaults(); // Add OpenTelemetry configurations
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -31,9 +35,11 @@ if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("QA") || ap
     });
 }
 
-
 app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
+
+app.UseMiddleware<RequestCounterMiddleware>();
+app.MapPrometheusScrapingEndpoint();
 
 app.MapGet("/key-pair", CreatePublicKeyPairEndpoint.ExecuteAsync)
     .WithName("KeyPair")
