@@ -8,7 +8,8 @@ public static class CollectionExtensions
     {
         builder
             .AddTracing()
-            .AddMetrics();
+            .AddMetrics()
+            .AddLogging();
 
         return builder;
     }

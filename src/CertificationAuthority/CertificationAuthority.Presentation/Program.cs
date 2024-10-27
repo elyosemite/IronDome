@@ -1,13 +1,15 @@
 using CertificationAuthority.Application;
 using CertificationAuthority.Presentation.Endpoints;
-using PublicKeyInfrastructure.SharedKernel.Logging;
 using Serilog;
 using Observability;
 using CertificationAuthority.Presentation;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.AddServiceDefaults(); // Add OpenTelemetry configurations
+ThreadPool.SetMinThreads(100, 100);
+
+// Configuration of Tracing, Logging (with Serilog) and Metrics
+builder.AddServiceDefaults();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -19,9 +21,7 @@ builder
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: false, reloadOnChange: true);
 
-
-builder.Services.AddLoggingConfiguration(builder.Configuration);
-builder.Host.UseSerilogWithConfiguration();
+builder.Host.UseSerilog();
 
 var app = builder.Build();
 

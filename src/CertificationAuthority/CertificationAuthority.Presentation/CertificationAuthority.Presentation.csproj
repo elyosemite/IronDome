@@ -13,11 +13,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Observability\Observability.csproj" />
-    <ProjectReference Include="..\..\SharedKernel\PublicKeyInfrastructure.SharedKernel\PublicKeyInfrastructure.SharedKernel.csproj" />
     <ProjectReference Include="..\CertificationAuthority.Application\CertificationAuthority.Application.csproj" />
     <ProjectReference Include="..\CertificationAuthority.Domain\CertificationAuthority.Domain.csproj" />
     <ProjectReference Include="..\CertificationAuthority.Infrastructure\CertificationAuthority.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\SharedKernel\PublicKeyInfrastructure.SharedKernel\PublicKeyInfrastructure.SharedKernel.csproj" />
+    <ProjectReference Include="..\..\Observability\Observability.csproj" />
   </ItemGroup>
 
 </Project>

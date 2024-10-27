@@ -1,21 +1,37 @@
+using System.Diagnostics;
 using System.Diagnostics.Metrics;
+using Observability;
 
 namespace CertificationAuthority.Presentation;
 
 public class RequestCounterMiddleware
 {
     private readonly RequestDelegate _next;
-    private readonly Counter<long> _requestCounter;
 
-    public RequestCounterMiddleware(RequestDelegate next, Meter meter)
+    public RequestCounterMiddleware(RequestDelegate next)
     {
         _next = next;
-        _requestCounter = meter.CreateCounter<long>("request_total");
     }
 
     public async Task Invoke(HttpContext context)
     {
-        _requestCounter.Add(1);
-        await _next(context);
+        MetricsConfig.TotalRequestCounter.Add(1);
+
+        MetricsConfig.ActiveRequestUpDownCounter.Add(1);
+
+        var stopWatch = Stopwatch.StartNew();
+        try
+        {
+            await _next(context);
+        }
+        finally
+        {
+            stopWatch.Stop();
+
+            MetricsConfig.RequestDurationHistogram.Record(stopWatch.ElapsedMilliseconds);
+
+            MetricsConfig.ActiveRequestUpDownCounter.Add(-1);
+        }
+
     }
 }

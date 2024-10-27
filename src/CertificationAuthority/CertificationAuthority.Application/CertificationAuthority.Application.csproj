@@ -12,8 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\SharedKernel\PublicKeyInfrastructure.SharedKernel\PublicKeyInfrastructure.SharedKernel.csproj" />
     <ProjectReference Include="..\CertificationAuthority.Infrastructure\CertificationAuthority.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\SharedKernel\PublicKeyInfrastructure.SharedKernel\PublicKeyInfrastructure.SharedKernel.csproj" />
   </ItemGroup>
 
 </Project>

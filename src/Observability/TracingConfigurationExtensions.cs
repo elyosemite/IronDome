@@ -18,6 +18,7 @@ public static class TracingConfigurationExtensions
                     .AddSqlClientInstrumentation()
                     .AddSource("CustomSource")
                     .SetSampler(new AlwaysOnSampler())
+                    .AddConsoleExporter()
                     .AddJaegerExporter(options =>
                     {
                         options.AgentHost = "localhost";
