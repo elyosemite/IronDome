@@ -1,7 +1,6 @@
 ﻿using System.IO.Compression;
 using MediatR;
 using CertificationAuthority.Application.UseCases.CreateCertificate;
-using CertificationAuthority.Infrastructure;
 using CertificationAuthority.Application.UseCases.CreatePublicPrivateKeyPair;
 using CertificationAuthority.Domain.Enumerations;
 using System.Text;
@@ -31,15 +30,15 @@ public class CreateCertificateEndpoint
         {
             using (var zipArchive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
             {
-                var publicKeyEntry = zipArchive.CreateEntry("certificate.pem");
-                using (var publicKeyStream = publicKeyEntry.Open())
+                var certificate = zipArchive.CreateEntry("certificate.pem");
+                using (var publicKeyStream = certificate.Open())
                 {
                     await publicKeyStream.WriteAsync(response.Certificate, 0, response.Certificate.Length);
                 }
             }
 
             memoryStream.Seek(0, SeekOrigin.Begin);
-            return Results.File(memoryStream.ToArray(), "application/zip", "keys.zip");
+            return Results.File(memoryStream.ToArray(), "application/zip", "certificate.zip");
         }
     }
 }

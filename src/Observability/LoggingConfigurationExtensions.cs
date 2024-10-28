@@ -27,7 +27,9 @@ public static class LoggingConfigurationExtensions
             .Enrich.WithEnvironmentName()
             .WriteTo.Console()
             .WriteTo.Seq(seqURL)
-            .WriteTo.GrafanaLoki("http://host.docker.internal:3100", labels: new[] { new LokiLabel { Key = "app", Value = "IronDome" } })
+            .WriteTo.GrafanaLoki("http://host.docker.internal:3100", labels: new[] {
+                new LokiLabel { Key = "app", Value = "IronDome" }
+            })
             .CreateLogger();
         
         return builder;
