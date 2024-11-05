@@ -8,6 +8,8 @@ public static class TracingConfigurationExtensions
 {
     public static IHostApplicationBuilder AddTracing(this IHostApplicationBuilder builder)
     {
+        builder.Services.AddSingleton(TracerProvider.Default);
+
         builder.Services
             .AddOpenTelemetry()
             .WithTracing(tracing =>
@@ -18,7 +20,6 @@ public static class TracingConfigurationExtensions
                     .AddSqlClientInstrumentation()
                     .AddSource("CustomSource")
                     .SetSampler(new AlwaysOnSampler())
-                    .AddConsoleExporter()
                     .AddJaegerExporter(options =>
                     {
                         options.AgentHost = "localhost";

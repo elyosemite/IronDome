@@ -10,15 +10,11 @@ public static class MetricsConfigurationExtensions
 {
     public static IHostApplicationBuilder AddMetrics(this IHostApplicationBuilder builder)
     {
-        //var meter = new Meter("CustomMetrics123", "1.0");
-        //builder.Services.AddSingleton(meter);
-
         builder.Services
             .AddOpenTelemetry()
             .WithMetrics(metric =>
             {
                 metric
-                    .AddConsoleExporter()
                     .AddPrometheusExporter()
                     .AddHttpClientInstrumentation()
                     .AddAspNetCoreInstrumentation()

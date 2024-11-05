@@ -3,8 +3,16 @@ using CertificationAuthority.Presentation.Endpoints;
 using Serilog;
 using Observability;
 using CertificationAuthority.Presentation;
+using OpenTelemetry;
+using OpenTelemetry.Trace;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var tracerProvider = Sdk.CreateTracerProviderBuilder()
+    .AddSource("CertificationAuthority.CertificationAuthority.Presentation")
+    .AddConsoleExporter()
+    .AddJaegerExporter()
+    .Build();
 
 ThreadPool.SetMinThreads(100, 100);
 
@@ -51,8 +59,8 @@ app.MapGet("/certificate", CreateCertificateEndpoint.ExecuteAsync)
 
 try
 {
-    Log.Information($"Starting web host on {app.Environment.EnvironmentName} Environment");
-    app.Run();
+    Log.Information("Starting web host on {EnvironmentName} Environment", app.Environment.EnvironmentName);
+    await app.RunAsync();
 }
 catch (Exception ex)
 {
@@ -60,5 +68,5 @@ catch (Exception ex)
 }
 finally
 {
-    Log.CloseAndFlush();
+    await Log.CloseAndFlushAsync();
 }

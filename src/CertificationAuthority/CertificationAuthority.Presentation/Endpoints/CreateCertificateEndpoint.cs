@@ -3,11 +3,13 @@ using MediatR;
 using CertificationAuthority.Application.UseCases.CreateCertificate;
 using CertificationAuthority.Application.UseCases.CreatePublicPrivateKeyPair;
 using CertificationAuthority.Domain.Enumerations;
-using System.Text;
+using System.Diagnostics;
+using Observability;
+using System.Globalization;
 
 namespace CertificationAuthority.Presentation.Endpoints;
 
-public class CreateCertificateEndpoint
+public static class CreateCertificateEndpoint
 {
     public static async Task<IResult> ExecuteAsync(IMediator mediator)
     {
@@ -17,11 +19,11 @@ public class CreateCertificateEndpoint
         var request = new CreateCertificateRequest(
             "Iron Dome DN",
             "203948239084",
-            DateTime.Parse("2021/10/13 12:00:00"),
-            DateTime.Parse("2024/10/1 00:00:00"),
+            DateTime.Parse("2021/10/13 12:00:00", new CultureInfo("pt-BR")),
+            DateTime.Parse("2030/10/1 00:00:00", new CultureInfo("pt-BR")),
             "Yuri Melo",
-            Encoding.ASCII.GetString(ironDomeRootIssuerPublicKeyPair.PublicKey),
-            Encoding.ASCII.GetString(subjectPublicKeyPair.PrivateKey),
+            Convert.ToBase64String(subjectPublicKeyPair.PublicKey),
+            Convert.ToBase64String(ironDomeRootIssuerPublicKeyPair.PrivateKey),
             SignatureAlgorithmEnum.SHA256WithRSA);
 
         var response = await mediator.Send(request);
@@ -30,10 +32,13 @@ public class CreateCertificateEndpoint
         {
             using (var zipArchive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
             {
-                var certificate = zipArchive.CreateEntry("certificate.pem");
-                using (var publicKeyStream = certificate.Open())
+                var certificate = zipArchive.CreateEntry("certificate.der");
+                using (var certificateStream = certificate.Open())
                 {
-                    await publicKeyStream.WriteAsync(response.Certificate, 0, response.Certificate.Length);
+                    using (Activity? activity = ActivityTracing.Source.StartActivity("CreateCertificate"))
+                    {
+                        await certificateStream.WriteAsync(response.Certificate, 0, response.Certificate.Length);
+                    }
                 }
             }
 

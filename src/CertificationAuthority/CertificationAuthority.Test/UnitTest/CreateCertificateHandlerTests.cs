@@ -10,23 +10,20 @@ namespace CertificationAuthority.Test.UnitTest;
 
 public class CreateCertificateHandlerTests
 {
-    private Mock<ICertificateGenerator> _mockCertificateGenerator;
-    private Mock<ICertificateBuilder> _mockCertificateBuilder;
-    private CreateCertificateHandler _handler;
+    private readonly Mock<ICertificateGenerator> _mockCertificateGenerator = new();
+    private readonly Mock<ICertificateBuilder> _mockCertificateBuilder = new();
+    private readonly CreateCertificateHandler _handler;
 
-    [SetUp]
-    public void Setup()
+    public CreateCertificateHandlerTests()
     {
-        _mockCertificateGenerator = new Mock<ICertificateGenerator>();
-        _mockCertificateBuilder = new Mock<ICertificateBuilder>();
-        _handler = new CreateCertificateHandler(_mockCertificateGenerator.Object, _mockCertificateBuilder.Object);
+        _handler = new(_mockCertificateGenerator.Object, _mockCertificateBuilder.Object);
     }
 
     [Test]
     public async Task Handle_ShouldReturnCertificateResponse()
     {
         // Arrange
-        var request = new CreateCertificateRequest(
+        CreateCertificateRequest request = new(
             IssuerDN: "CN=Issuer",
             SerialNumber: "123456",
             SubjectDN: "CN=Subject",
@@ -37,7 +34,7 @@ public class CreateCertificateHandlerTests
             SenderPrivateKey: "privateKey"
         );
 
-        var domainCertificate = new PKICertificateFactory()
+        PKICertificate domainCertificate = new PKICertificateFactory()
             .Factory(
                 request.IssuerDN,
                 request.SerialNumber,

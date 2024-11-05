@@ -20,8 +20,7 @@ public class PublicKeyPairGenerator : IPublicKeyPairGenerator
 
         var privateKeyInfo = PrivateKeyInfoFactory.CreatePrivateKeyInfo(keyPair.Private);
         byte[] privateKey = privateKeyInfo.ToAsn1Object().GetDerEncoded();
-
-
+        
         return new PublicKeyPair(publicKey, privateKey);
     }
 
@@ -29,8 +28,10 @@ public class PublicKeyPairGenerator : IPublicKeyPairGenerator
     {
         using (var stringWriter = new StringWriter())
         {
-            var pemWriter = new PemWriter(stringWriter);
-            pemWriter.WriteObject(key);
+            using (var pemWriter = new PemWriter(stringWriter))
+            {
+                pemWriter.WriteObject(key);
+            }
             return Encoding.UTF8.GetBytes(stringWriter.ToString());
         }
     }

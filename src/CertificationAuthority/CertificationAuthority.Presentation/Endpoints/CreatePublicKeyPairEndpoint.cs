@@ -4,7 +4,7 @@ using System.IO.Compression;
 
 namespace CertificationAuthority.Presentation.Endpoints;
 
-public class CreatePublicKeyPairEndpoint
+public static class CreatePublicKeyPairEndpoint
 {
     public static async Task<IResult> ExecuteAsync(IMediator mediator)
     {
