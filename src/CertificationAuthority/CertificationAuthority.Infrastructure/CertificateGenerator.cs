@@ -12,9 +12,9 @@ using Org.BouncyCastle.X509;
 
 namespace CertificationAuthority.Infrastructure;
 
-public class CertificateGenerator : ICertificateGenerator
+public static class CertificateGenerator
 {
-    public byte[] X509CreateCertificate(PKICertificate pkiCertificate, byte[] senderPrivateKey)
+    public static byte[] X509CreateCertificate(PKICertificate pkiCertificate, byte[] senderPrivateKey)
     {
         var certificate = new X509V3CertificateGenerator();
         certificate.SetSerialNumber(BigInteger.ProbablePrime(120, new SecureRandom()));
@@ -36,11 +36,11 @@ public class CertificateGenerator : ICertificateGenerator
         return certificate.Generate(signatureFactory).GetEncoded();
     }
 
-    private static AsymmetricKeyParameter GetPublicKeyFromPem(string publicKeyPem)
+    public static AsymmetricKeyParameter GetPublicKeyFromPem(string publicKeyPem)
     {
         using (var reader = new StringReader(publicKeyPem))
         {
-            using(var pemReader = new PemReader(reader))
+            using (var pemReader = new PemReader(reader))
             {
                 var publicKeyObject = pemReader.ReadObject();
 

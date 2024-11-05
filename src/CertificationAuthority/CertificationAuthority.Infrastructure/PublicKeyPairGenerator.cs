@@ -7,9 +7,9 @@ using Org.BouncyCastle.Security;
 
 namespace CertificationAuthority.Infrastructure;
 
-public class PublicKeyPairGenerator : IPublicKeyPairGenerator
+public static class PublicKeyPairGenerator
 {
-    public PublicKeyPair Generate()
+    public static PublicKeyPair Generate()
     {
         var keyGenerationParameters = new KeyGenerationParameters(new SecureRandom(), 2048);
         var keyPairGenerator = new RsaKeyPairGenerator();
@@ -20,11 +20,11 @@ public class PublicKeyPairGenerator : IPublicKeyPairGenerator
 
         var privateKeyInfo = PrivateKeyInfoFactory.CreatePrivateKeyInfo(keyPair.Private);
         byte[] privateKey = privateKeyInfo.ToAsn1Object().GetDerEncoded();
-        
+
         return new PublicKeyPair(publicKey, privateKey);
     }
 
-    private byte[] ConvertToPem(AsymmetricKeyParameter key)
+    private static byte[] ConvertToPem(AsymmetricKeyParameter key)
     {
         using (var stringWriter = new StringWriter())
         {

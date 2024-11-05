@@ -1,5 +1,4 @@
-﻿using System.Text;
-using CertificationAuthority.Domain.Builders;
+﻿using CertificationAuthority.Domain.Builders;
 using CertificationAuthority.Infrastructure;
 using MediatR;
 
@@ -7,12 +6,10 @@ namespace CertificationAuthority.Application.UseCases.CreateCertificate;
 
 public sealed class CreateCertificateHandler : IRequestHandler<CreateCertificateRequest, CreateCertificateResponse>
 {
-    private readonly ICertificateGenerator _certificateGenerator;
     private readonly ICertificateBuilder _certificateBuilder;
 
-    public CreateCertificateHandler(ICertificateGenerator certificateGenerator, ICertificateBuilder certificateBuilder)
+    public CreateCertificateHandler(ICertificateBuilder certificateBuilder)
     {
-        _certificateGenerator = certificateGenerator;
         _certificateBuilder = certificateBuilder;
     }
 
@@ -27,9 +24,9 @@ public sealed class CreateCertificateHandler : IRequestHandler<CreateCertificate
             .WithPublicKey(request.PublicKey)
             .WithSignatureAlgorithm(request.SignatureAlgorithm)
             .Build();
-            
+
         var senderPrivateKey = Convert.FromBase64String(request.SenderPrivateKey);
-        var certificate = _certificateGenerator.X509CreateCertificate(domainCertificate, senderPrivateKey);
+        var certificate = CertificateGenerator.X509CreateCertificate(domainCertificate, senderPrivateKey);
 
         return Task.FromResult(new CreateCertificateResponse(certificate));
     }
