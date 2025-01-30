@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CertificationAuthority.Infrastructure\CertificationAuthority.Infrastructure.csproj" />
-    <ProjectReference Include="..\..\SharedKernel\PublicKeyInfrastructure.SharedKernel\PublicKeyInfrastructure.SharedKernel.csproj" />
+    <ProjectReference Include="..\..\SharedKernel\SharedKernel.csproj" />
   </ItemGroup>
 
 </Project>

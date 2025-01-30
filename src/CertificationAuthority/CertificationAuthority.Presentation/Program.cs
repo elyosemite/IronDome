@@ -1,5 +1,6 @@
 using CertificationAuthority.Application;
 using CertificationAuthority.Presentation.Endpoints;
+using SharedKernel.Settings;
 using Serilog;
 using Observability;
 using CertificationAuthority.Presentation;
@@ -23,6 +24,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplicationServices();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+
+// Configure Option Pattern for GlobalSettings
+builder.Services.Configure<GlobalSettings>(builder.Configuration.GetSection("GlobalSettings"));
 
 builder
     .Configuration
@@ -59,7 +63,7 @@ app.MapGet("/certificate", CreateCertificateEndpoint.ExecuteAsync)
 
 try
 {
-    Log.Information("Starting web host on {EnvironmentName} Environment", app.Environment.EnvironmentName);
+    Log.Information("Starting web host on {EnvironmentName} Environment created by {Author}. The ApiKey is {ApiKey}", app.Environment.EnvironmentName, builder.Configuration["GlobalSettings:Author"], builder.Configuration["GlobalSettings:ApiKey"]);
     await app.RunAsync();
 }
 catch (Exception ex)
