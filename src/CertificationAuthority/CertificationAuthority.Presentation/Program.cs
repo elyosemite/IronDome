@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 var tracerProvider = Sdk.CreateTracerProviderBuilder()
     .AddSource("CertificationAuthority.CertificationAuthority.Presentation")
-    .AddConsoleExporter()
+    //.AddConsoleExporter()
     .AddJaegerExporter()
     .Build();
 
@@ -21,6 +21,7 @@ ThreadPool.SetMinThreads(100, 100);
 builder.AddServiceDefaults();
 
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddLogging();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplicationServices();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
@@ -61,9 +62,14 @@ app.MapGet("/certificate", CreateCertificateEndpoint.ExecuteAsync)
     .WithName("Certificate")
     .WithOpenApi();
 
+app.MapGet("/guid", GetGuidEndpoint.ExecuteAsync)
+    .WithName("Guid")
+    .WithOpenApi();
+
 try
 {
-    Log.Information("Starting web host on {EnvironmentName} Environment created by {Author}. The ApiKey is {ApiKey}", app.Environment.EnvironmentName, builder.Configuration["GlobalSettings:Author"], builder.Configuration["GlobalSettings:ApiKey"]);
+    var urls = string.Join(", ", app.Urls);
+    Log.Information("Starting web host on {EnvironmentName} Environment created by {Author}. The ApiKey is {ApiKey}. Listening on {Urls}", app.Environment.EnvironmentName, builder.Configuration["GlobalSettings:Author"], builder.Configuration["GlobalSettings:ApiKey"], urls);
     await app.RunAsync();
 }
 catch (Exception ex)

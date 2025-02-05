@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using System.Diagnostics.Metrics;
 using Observability;
 
 namespace CertificationAuthority.Presentation;
@@ -32,6 +31,5 @@ public class RequestCounterMiddleware
 
             MetricsConfig.ActiveRequestUpDownCounter.Add(-1);
         }
-
     }
 }

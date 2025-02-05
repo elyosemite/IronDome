@@ -6,15 +6,21 @@ using CertificationAuthority.Domain.Enumerations;
 using System.Diagnostics;
 using Observability;
 using System.Globalization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CertificationAuthority.Presentation.Endpoints;
 
 public static class CreateCertificateEndpoint
 {
-    public static async Task<IResult> ExecuteAsync(IMediator mediator)
+    public static async Task<IResult> ExecuteAsync(IMediator mediator, [FromServices] ILoggerFactory loggerFactory)
     {
+        var logger = loggerFactory.CreateLogger("GenericLogger");
+
         var ironDomeRootIssuerPublicKeyPair = await mediator.Send(new CreatePublicPrivateKeyPairRequest());
+        logger.LogInformation("Iron Dome Root CA's Generated Key");
+
         var subjectPublicKeyPair = await mediator.Send(new CreatePublicPrivateKeyPairRequest());
+        logger.LogInformation("Subject's Generated Key");
 
         var request = new CreateCertificateRequest(
             "Iron Dome DN",
