@@ -2,11 +2,11 @@
 
 🔒🔑🛡️
 
-Welcome to the PKI and Digital Certificates Project, where security meets innovation through robust cryptographic algorithms.
+Welcome to the Irno Dome: Public Key Infrastructure Project, where security meets innovation through robust cryptographic algorithms.
 
 ## Overview
 
-This project focuses on the study and implementation of Public Key Infrastructure (PKI) for secure digital communications. It includes:
+This project focuses on the study and implementation of Public Key Infrastructure (PKI) for secure digital communications according to RFC 5280. It includes:
 
 - Generation of RSA key pairs for asymmetric encryption.
 - Implementation of Diffie-Hellman for session key exchange.
