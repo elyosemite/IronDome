@@ -58,4 +58,16 @@ public class CreateCertificateHandlerTests
         Assert.IsNotNull(response);
         //Assert.That(expectedCertificate, Is.EqualTo(response.Certificate));
     }
+
+    [Test]
+    public async Task CreateCertificateHandler_CreateSuccessfullyCSRFile()
+    {
+
+    }
+
+    [Test]
+    public async Task CreateCertificate_FromCSRFile()
+    {
+
+    }
 }
