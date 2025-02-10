@@ -13,11 +13,11 @@ public class Tests
     {
         // Arrange
         var factory = _certificateFactory;
-        var issuerDN = "CN=Issuer";
+        var issuerDN = "Issuer";
         var serialNumber = "123456789";
         var notBefore = DateTime.UtcNow;
         var notAfter = DateTime.UtcNow.AddYears(1);
-        var subjectDN = "CN=Subject";
+        var subjectDN = "Subject";
         var publicKey = "PublicKey";
         var signatureAlgorithm = SignatureAlgorithmEnum.SHA256WithRSA;
 
@@ -25,14 +25,17 @@ public class Tests
         var certificate = factory.Factory(issuerDN, serialNumber, notBefore, notAfter, subjectDN, publicKey, signatureAlgorithm);
 
         // Assert
-        Assert.IsNotNull(certificate);
-        Assert.That(issuerDN, Is.EqualTo(certificate.IssuerDN.Value));
-        Assert.That(serialNumber, Is.EqualTo(certificate.SerialNumber.Value));
-        Assert.That(notBefore, Is.EqualTo(certificate.NotBefore));
-        Assert.That(notAfter, Is.EqualTo(certificate.NotAfter));
-        Assert.That(subjectDN, Is.EqualTo(certificate.SubjectDN.Value));
-        Assert.That(publicKey, Is.EqualTo(certificate.PublicKey.Value));
-        Assert.That(signatureAlgorithm, Is.EqualTo(certificate.SignatureAlgorithm.Value));
+        Assert.Multiple(() =>
+        {
+            Assert.IsNotNull(certificate);
+            Assert.That($"CN={issuerDN}", Is.EqualTo(certificate.IssuerDN.Value));
+            Assert.That(serialNumber, Is.EqualTo(certificate.SerialNumber.Value));
+            Assert.That(notBefore, Is.EqualTo(certificate.NotBefore));
+            Assert.That(notAfter, Is.EqualTo(certificate.NotAfter));
+            Assert.That($"CN={subjectDN}", Is.EqualTo(certificate.SubjectDN.Value));
+            Assert.That(publicKey, Is.EqualTo(certificate.PublicKey.Value));
+            Assert.That(signatureAlgorithm, Is.EqualTo(certificate.SignatureAlgorithm.Value));
+        });
     }
 
     [Test]
