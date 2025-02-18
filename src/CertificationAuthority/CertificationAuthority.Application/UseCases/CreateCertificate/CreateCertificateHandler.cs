@@ -8,6 +8,11 @@ public sealed class CreateCertificateHandler : IRequestHandler<CreateCertificate
 {
     private readonly ICertificateBuilder _certificateBuilder;
 
+    public CreateCertificateHandler()
+    {
+        _certificateBuilder = new CertificateBuilder();
+    }
+
     public CreateCertificateHandler(ICertificateBuilder certificateBuilder)
     {
         _certificateBuilder = certificateBuilder;

@@ -11,7 +11,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 var tracerProvider = Sdk.CreateTracerProviderBuilder()
     .AddSource("CertificationAuthority.CertificationAuthority.Presentation")
-    //.AddConsoleExporter()
     .AddJaegerExporter()
     .Build();
 

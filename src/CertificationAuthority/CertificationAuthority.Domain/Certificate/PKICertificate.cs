@@ -11,7 +11,7 @@ public class PKICertificate : EntityBase<Guid>, ICertificate
     public IssuerDN IssuerDN { get; }
     public SerialNumber SerialNumber { get; }
     public DateTime NotBefore { get; }
-    public DateTime NotAfter { get;  }
+    public DateTime NotAfter { get; }
     public SubjectDN SubjectDN { get; }
     public PublicKey PublicKey { get; }
     public SignatureAlgorithm SignatureAlgorithm { get; } // TODO - "SHA256WithRSA"; Smart Enums do DDD

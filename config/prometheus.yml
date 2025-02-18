@@ -1,0 +1,7 @@
+global:
+  scrape_interval: 5s # Coleta dados a cada 5 segundos
+
+scrape_configs:
+  - job_name: 'k6'
+    static_configs:
+      - targets: ['k6:6565'] # Coleta as métricas do K6 diretamente
