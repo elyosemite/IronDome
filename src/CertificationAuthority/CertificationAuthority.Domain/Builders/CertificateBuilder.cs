@@ -21,6 +21,11 @@ public class CertificateBuilder : ICertificateBuilder
     private bool _isInstanceReassembly = false;
     private readonly ICertificateFactory _certificateFactory;
 
+    public CertificateBuilder()
+    {
+        _certificateFactory = new PKICertificateFactory();
+    }
+
     public CertificateBuilder(ICertificateFactory certificateFactory)
     {
         _certificateFactory = certificateFactory;
