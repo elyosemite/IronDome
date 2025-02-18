@@ -6,3 +6,5 @@ src/Observability/loki/cache
 src/Observability/loki/compactor
 src/Observability/loki/index
 src/Observability/loki/wal
+
+config/nginx/logs
