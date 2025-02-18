@@ -27,6 +27,8 @@ This project focuses on the study and implementation of Public Key Infrastructur
 - **Online Certificate Status Protocol (OCSP)**: Verify certificate revocation status.
 - **Certificate Revocation Lists (CRLs)**: Maintain lists of revoked certificates.
 - **Authority Information Access (AIA)**: Provide access to additional certificate information.
+- **DigitalSignature**: Sign document, software and any data with certificates.
+- **DataEncryption**: Provide data encryption.
 
 ## Installation
 
