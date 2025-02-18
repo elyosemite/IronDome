@@ -9,6 +9,11 @@ public struct PublicKey : IKey, IEquatable<PublicKey>
         _key = key ?? throw new ArgumentNullException(nameof(key));
     }
 
+    public PublicKey(string base64)
+    {
+        _key = Convert.FromBase64String(base64);
+    }
+
     public string Value
     {
         get => ToBase64();
