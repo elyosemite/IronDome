@@ -1,18 +1,32 @@
 namespace CertificationAuthority.Domain.ValueObjects;
 
-public struct PrivateKey : IEquatable<PrivateKey>
+public struct PrivateKey : IKey, IEquatable<PrivateKey>
 {
-    public string Value { get; }
+    private readonly byte[] _key;
 
-    public PrivateKey(string value)
+    public PrivateKey(byte[] key)
     {
-        if (string.IsNullOrEmpty(value)) throw new ArgumentNullException(nameof(value), "PrivateKey value can not be null or empty.");
+        _key = key ?? throw new ArgumentNullException(nameof(key));
+    }
 
-        Value = value;
+    public PrivateKey(string base64Key)
+    {
+        if (string.IsNullOrEmpty(base64Key)) throw new ArgumentNullException(nameof(base64Key), "PrivateKey base64Key can not be null or empty.");
+
+        _key = Convert.FromBase64String(base64Key);
+    }
+
+    public string Value
+    {
+        get => ToBase64();
     }
 
     public bool Equals(PrivateKey other)
     {
         return Value == other.Value;
     }
+
+    public byte[] ToDer() => _key;
+    public string ToPem() => $"-----BEGIN PRIVATE KEY-----\n{ToBase64()}\n-----END PRIVATE KEY-----";
+    public string ToBase64() => Convert.ToBase64String(_key);
 }
