@@ -3,18 +3,29 @@ using CertificationAuthority.Domain.Interfaces;
 
 namespace CertificationAuthority.Domain.ValueObjects;
 
+public enum KeyEncodingType
+{
+    Der,
+    Pem,
+    Unknown
+}
+
 public struct PublicKey : IEquatable<PublicKey>
 {
     private readonly byte[] _key;
+    private readonly KeyEncodingType _keyEncodingType = KeyEncodingType.Unknown;
 
     public PublicKey(byte[] key)
     {
         _key = key ?? throw new ArgumentNullException(nameof(key));
+        _keyEncodingType = KeyEncodingType.Der;
     }
 
+    // FIXME: This constructor should not exists. Remove in future versions.
     public PublicKey(string base64)
     {
         _key = Convert.FromBase64String(base64);
+        _keyEncodingType = KeyEncodingType.Pem;
     }
 
     public string Value
@@ -32,6 +43,8 @@ public struct PublicKey : IEquatable<PublicKey>
             return _key;
         }
     }
+
+    public KeyEncodingType KeyEncodingType => _keyEncodingType;
 
     public bool Equals(PublicKey other)
     {
