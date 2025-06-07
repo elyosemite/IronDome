@@ -1,6 +1,9 @@
-﻿namespace CertificationAuthority.Domain.ValueObjects;
+﻿using CertificationAuthority.Domain.Extensions;
+using CertificationAuthority.Domain.Interfaces;
 
-public struct PublicKey : IKey, IEquatable<PublicKey>
+namespace CertificationAuthority.Domain.ValueObjects;
+
+public struct PublicKey : IEquatable<PublicKey>
 {
     private readonly byte[] _key;
 
@@ -16,7 +19,18 @@ public struct PublicKey : IKey, IEquatable<PublicKey>
 
     public string Value
     {
-        get => ToBase64();
+        get => this.ToBase64();
+    }
+
+    public byte[] RawValue
+    {
+        get
+        {
+            if (_key == null || _key.Length == 0)
+                throw new InvalidOperationException("Public key is not initialized.");
+
+            return _key;
+        }
     }
 
     public bool Equals(PublicKey other)
@@ -24,7 +38,27 @@ public struct PublicKey : IKey, IEquatable<PublicKey>
         return Value == other.Value;
     }
 
-    public byte[] ToDer() => _key;
-    public string ToPem() => $"-----BEGIN PUBLIC KEY-----\n{ToBase64()}\n-----END PUBLIC KEY-----";
-    public string ToBase64() => Convert.ToBase64String(_key);
+    public static PublicKey FromDer(string der, IDerConvertFacade derConvertFacade)
+    {
+        if (derConvertFacade == null)
+            throw new ArgumentNullException(nameof(derConvertFacade));
+
+        if (string.IsNullOrEmpty(der))
+            throw new ArgumentNullException(nameof(der));
+
+        var keyBytes = derConvertFacade.ToDer(der);
+        return new PublicKey(keyBytes);
+    }
+
+    public static PublicKey FromPem(string pem, IPemConvertFacade pemConvertFacade)
+    {
+        if (pemConvertFacade == null)
+            throw new ArgumentNullException(nameof(pemConvertFacade));
+
+        if (string.IsNullOrEmpty(pem))
+            throw new ArgumentNullException(nameof(pem));
+
+        var keyBytes = pemConvertFacade.ToPem(pem);
+        return new PublicKey(keyBytes);
+    }
 }
