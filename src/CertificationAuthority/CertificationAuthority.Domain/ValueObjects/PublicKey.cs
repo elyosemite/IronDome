@@ -50,12 +50,36 @@ public struct PublicKey : IEquatable<PublicKey>
         return new PublicKey(keyBytes);
     }
 
+    public static PublicKey FromDer(byte[] der, IDerConvertFacade derConvertFacade)
+    {
+        if (derConvertFacade == null)
+            throw new ArgumentNullException(nameof(derConvertFacade));
+
+        if (der == null || der.Length == 0)
+            throw new ArgumentNullException(nameof(der));
+
+        var keyBytes = derConvertFacade.ToDer(der);
+        return new PublicKey(keyBytes);
+    }
+
     public static PublicKey FromPem(string pem, IPemConvertFacade pemConvertFacade)
     {
         if (pemConvertFacade == null)
             throw new ArgumentNullException(nameof(pemConvertFacade));
 
         if (string.IsNullOrEmpty(pem))
+            throw new ArgumentNullException(nameof(pem));
+
+        var keyBytes = pemConvertFacade.ToPem(pem);
+        return new PublicKey(keyBytes);
+    }
+
+    public static PublicKey FromPem(byte[] pem, IPemConvertFacade pemConvertFacade)
+    {
+        if (pemConvertFacade == null)
+            throw new ArgumentNullException(nameof(pemConvertFacade));
+
+        if (pem == null || pem.Length == 0)
             throw new ArgumentNullException(nameof(pem));
 
         var keyBytes = pemConvertFacade.ToPem(pem);
