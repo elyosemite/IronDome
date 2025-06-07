@@ -41,7 +41,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DigitalSignature.Test", "Di
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedKernel", "SharedKernel", "{5D335DCE-6411-42A2-BE25-8F6A47B45720}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PublicKeyInfrastructure.SharedKernel", "SharedKernel\PublicKeyInfrastructure.SharedKernel\PublicKeyInfrastructure.SharedKernel.csproj", "{C3F592CB-3357-4951-83B0-72F71217B084}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PublicKeyInfrastructure.SharedKernel", "SharedKernel\SharedKernel.csproj", "{C3F592CB-3357-4951-83B0-72F71217B084}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Observability", "Observability\Observability.csproj", "{68047CA0-6DF1-4EA8-A7AC-0E52D7426A7E}"
 EndProject
