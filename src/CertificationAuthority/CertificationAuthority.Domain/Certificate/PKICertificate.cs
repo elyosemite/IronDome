@@ -54,7 +54,23 @@ public class PKICertificate : EntityBase<Guid>, ICertificate
         NotBefore = notBefore;
         NotAfter = notAfter;
 
-        var inconsistentDatesSpec = new InconsistentSpec(); // Specification Pattern do DDD
+        var inconsistentDatesSpec = new InconsistentSpec();
+        if (!inconsistentDatesSpec.IsSatisfiedBy(this)) throw new InvalidOperationException("Inconsistent Dates");
+
+        SerialNumber = new SerialNumber(serialNumber);
+        IssuerDN = new IssuerDN(issuerDN);
+        SubjectDN = new SubjectDN(subjectDN);
+        PublicKey = new PublicKey(publicKey);
+        SignatureAlgorithm = new SignatureAlgorithm(signatureAlgorithm);
+    }
+
+    public PKICertificate(Guid identifier, string issuerDN, string serialNumber, DateTime notBefore, DateTime notAfter, string subjectDN, byte[] publicKey, SignatureAlgorithmEnum signatureAlgorithm)
+    {
+        Id = identifier;
+        NotBefore = notBefore;
+        NotAfter = notAfter;
+
+        var inconsistentDatesSpec = new InconsistentSpec();
         if (!inconsistentDatesSpec.IsSatisfiedBy(this)) throw new InvalidOperationException("Inconsistent Dates");
 
         SerialNumber = new SerialNumber(serialNumber);
