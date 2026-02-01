@@ -4,11 +4,41 @@
 
 ---
 
-## 1. Organizations
+## 1. Actors & Roles
+*   **Organization**: A legal entity (e.g., "IronDome Corp") that acts as the root boundary for subjects.
+*   **Subject**: An individual actor (Person, System, Device) belonging to an Organization.
+    *   **Note**: At this layer, a Subject is just a database record. Whether they become a Root CA, Intermediate CA, or End-User is determined later by the **CA Service**.
+
+### 1.1. Entity Relationship Diagram
+
+```mermaid
+sequenceDiagram
+    participant OrgAdmin as Organization Admin
+    participant IdentitySvc as Identity Service
+    participant DB as Identity Database
+
+    note over OrgAdmin, DB: Bootstrapping a New Company
+    OrgAdmin->>IdentitySvc: POST /organizations { "name": "Acme Corp" }
+    IdentitySvc->>DB: INSERT Organization
+    IdentitySvc-->>OrgAdmin: 201 Created (OrgID: 100)
+
+    note over OrgAdmin, DB: Onboarding Employees (Subjects)
+    OrgAdmin->>IdentitySvc: POST /orgs/100/subjects { "name": "Alice (Admin)" }
+    IdentitySvc->>DB: INSERT Subject (Linked to Org 100)
+    IdentitySvc-->>OrgAdmin: 201 Created (SubjID: alice_uuid)
+
+    OrgAdmin->>IdentitySvc: POST /orgs/100/subjects { "name": "Bob (User)" }
+    IdentitySvc->>DB: INSERT Subject (Linked to Org 100)
+    IdentitySvc-->>OrgAdmin: 201 Created (SubjID: bob_uuid)
+```
+
+---
+
+## 2. Organizations
 
 Represents a legal boundaries, typically a company or a root entity.
 
-### 1.1. Create Organization
+### 2.1. Create Organization
 Registers a new legal entity.
 
 *   **POST** `/api/v1/organizations`
@@ -41,16 +71,16 @@ Registers a new legal entity.
 }
 ```
 
-### 1.2. Get Organization
+### 2.2. Get Organization
 *   **GET** `/api/v1/organizations/{id}`
 
 ---
 
-## 2. Subjects (Actors)
+## 3. Subjects (Actors)
 
 Represents an actor within an organization. This can be a Person, a System (Service Account), or a Device (IoT). This entity will later become the "Subject" of an X.509 Certificate.
 
-### 2.1. Create Subject
+### 3.1. Create Subject
 Registers a new actor.
 
 *   **POST** `/api/v1/organizations/{orgId}/subjects`
@@ -84,10 +114,10 @@ Registers a new actor.
 }
 ```
 
-### 2.2. Get Subject Details
+### 3.2. Get Subject Details
 *   **GET** `/api/v1/subjects/{id}`
 
-### 2.3. Search Subjects
+### 3.3. Search Subjects
 Useful for auto-discovery when issuing certificates.
 
 *   **GET** `/api/v1/subjects?email=maria.silva@irondome.io`

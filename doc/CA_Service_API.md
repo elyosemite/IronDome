@@ -4,11 +4,73 @@
 
 ---
 
-## 1. Authority Management (CAs)
+## 1. Workflows & Actors
+
+*   **Root Authority**: A Subject elevated to be the Trust Anchor.
+*   **Intermediate Authority**: A Subject elevated to issue certificates, signed by a Root or another Intermediate.
+*   **End-Entity**: A Subject that holds a certificate for usage (TLS, Email, Signing) but cannot sign other certificates.
+
+### 1.1. Hierarchy Creation Sequence
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant Admin as PKI Admin
+    participant CASvc as CA Service
+    participant IdentitySvc as Identity Service
+
+    %% ROOT CREATION
+    note over Admin, CASvc: 1. Creating the Root of Trust
+    Admin->>CASvc: POST /authorities { "subjectId": "subj_alice_root", "type": "ROOT" }
+    CASvc->>IdentitySvc: Get Subject Data (Alice)
+    CASvc->>CASvc: Generate Key Pair + Self-Sign
+    CASvc-->>Admin: Returns AuthID: root_ca_id
+
+    %% INTERMEDIATE CREATION
+    note over Admin, CASvc: 2. Delegating Authority (Intermediate)
+    Admin->>CASvc: POST /authorities
+    note right of Admin: { "subjectId": "subj_bob_manager", "type": "INTERMEDIATE", "parent": "root_ca_id" }
+    CASvc->>IdentitySvc: Get Subject Data (Bob)
+    CASvc->>CASvc: Generate Key Pair (Bob)
+    CASvc->>CASvc: Sign Bob's Cert with Root Key
+    note right of CASvc: Enforce PathLen > 0 (Manager)
+    CASvc-->>Admin: Returns AuthID: interm_ca_id
+
+    %% END-ENTITY ISSUANCE
+    note over Admin, CASvc: 3. Issuing User Certificate
+    Admin->>CASvc: POST /issuers/interm_ca_id/certificates
+    note right of Admin: { "subjectId": "subj_charlie_user", "template": "TLS_CLIENT" }
+    CASvc->>IdentitySvc: Get Subject Data (Charlie)
+    CASvc->>CASvc: Sign Charlie's Cert with Intermediate Key
+    note right of CASvc: Enforce BasicConstraints: CA=FALSE
+    CASvc-->>Admin: Returns X.509 Certificate
+```
+
+### 1.2. Revocation Sequence
+
+```mermaid
+sequenceDiagram
+    participant Admin
+    participant CASvc as CA Service
+
+    Admin->>CASvc: POST /certificates/{cert_id}/revocation
+    note right of Admin: { "reason": "KEY_COMPROMISE" }
+    CASvc->>CASvc: Mark Certificate as REVOKED in DB
+    CASvc->>CASvc: Add Serial Number to CRL Pending List
+    CASvc-->>Admin: 202 Accepted
+
+    note over CASvc: Async Process (CRL Gen)
+    CASvc->>CASvc: Generate new CRL signed by Issuer
+    CASvc->>CASvc: Publish CRL to Distribution Point
+```
+
+---
+
+## 2. Authority Management (CAs)
 
 Transform a `Subject` (from Identity Service) into a **Certification Authority**. This involves generating a key pair and either self-signing (Root) or requesting a signature (Intermediate).
 
-### 1.1. Promote Subject to Authority
+### 2.1. Promote Subject to Authority
 Creates a new CA.
 
 *   **POST** `/api/v1/authorities`
@@ -50,18 +112,18 @@ Creates a new CA.
 }
 ```
 
-### 1.2. Get Authority Chain
+### 2.2. Get Authority Chain
 Retrieves the full trust chain (P7B or ordered list) for installation.
 
 *   **GET** `/api/v1/authorities/{id}/chain`
 
 ---
 
-## 2. Certificate Issuance (End-Entities)
+## 3. Certificate Issuance (End-Entities)
 
 Issues certificates for non-authority subjects (Web Servers, Email, Signatures).
 
-### 2.1. Issue Certificate
+### 3.1. Issue Certificate
 *   **POST** `/api/v1/issuers/{authorityId}/certificates`
 
 **Request:**
@@ -89,9 +151,9 @@ Issues certificates for non-authority subjects (Web Servers, Email, Signatures).
 
 ---
 
-## 3. Revocation (CRL)
+## 4. Revocation (CRL)
 
-### 3.1. Revoke Certificate
+### 4.1. Revoke Certificate
 *   **POST** `/api/v1/certificates/{certId}/revocation`
 
 **Request:**
@@ -102,8 +164,7 @@ Issues certificates for non-authority subjects (Web Servers, Email, Signatures).
 }
 ```
 
-### 3.2. Download CRL
+### 4.2. Download CRL
 *   **GET** `/api/v1/issuers/{authorityId}/crl`
     *   Returns the raw binary DER or PEM CRL file.
 
-```

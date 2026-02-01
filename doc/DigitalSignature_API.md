@@ -4,11 +4,56 @@
 
 ---
 
-## 1. Remote Signing (Server-Side)
+## 1. Workflows
+
+### 1.1. Remote Signing (Server-Side)
+The client application wants to sign a PDF hash. It doesn't have the user's private key; IronDome manages it.
+
+```mermaid
+sequenceDiagram
+    participant App as Client App
+    participant SignSvc as Digital Signature Svc
+    participant CASvc as CA Service (KMS)
+
+    note over App, SignSvc: Signing a Document Hash
+    App->>SignSvc: POST /signatures/remote { subjectId: "maria", hash: "a1b2..." }
+    
+    SignSvc->>CASvc: Request Private Key Operation (Sign Hash)
+    note right of SignSvc: Authenticate request & authorize key access
+    
+    CASvc->>CASvc: Retrieve Encrypted Key -> Decrypt -> Sign Hash
+    CASvc-->>SignSvc: Return Raw Signature (Bytes)
+    
+    SignSvc->>SignSvc: Wrap in CMS/PAdES Structure
+    SignSvc-->>App: Return PKCS#7 / CMS Signature
+```
+
+### 1.2. Signature Validation
+Verifying an incoming signed document against the PKI trust anchors.
+
+```mermaid
+sequenceDiagram
+    participant App as Client App
+    participant SignSvc as Digital Signature Svc
+    participant CASvc as CA Service
+
+    App->>SignSvc: POST /validations/proof { signature: "..." }
+    
+    SignSvc->>SignSvc: Parse CMS & Extract Certificate
+    SignSvc->>CASvc: Check Revocation Status (OCSP/CRL)
+    CASvc-->>SignSvc: Status: GOOD / REVOKED
+    
+    SignSvc->>SignSvc: Verify Cryptographic Signature
+    SignSvc-->>App: { isValid: true, signer: "Maria Silva" }
+```
+
+---
+
+## 2. Remote Signing (Server-Side)
 
 In this mode, the Private Key is held securely by IronDome (HSM or Encrypted DB). The client sends the data (hash), and the service signs it.
 
-### 1.1. Sign Document (Hash)
+### 2.1. Sign Document (Hash)
 Signs a document hash using a stored identity key.
 
 *   **POST** `/api/v1/signatures/remote`
@@ -39,11 +84,11 @@ Signs a document hash using a stored identity key.
 
 ---
 
-## 2. Signature Validation
+## 3. Signature Validation
 
 Validates signatures generated either by IronDome or external PKIs.
 
-### 2.1. Validate Signature
+### 3.1. Validate Signature
 *   **POST** `/api/v1/validations/proof`
 
 **Request:**
