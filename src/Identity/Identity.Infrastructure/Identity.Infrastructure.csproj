@@ -10,4 +10,10 @@
     <ProjectReference Include="..\Identity.Domain\Identity.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Ardalis.Specification.EntityFrameworkCore" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.1" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
+  </ItemGroup>
+
 </Project>
