@@ -30,7 +30,7 @@ public static class CreateCertificateEndpoint
             "Yuri Melo",
             Convert.ToBase64String(subjectPublicKeyPair.PublicKey),
             Convert.ToBase64String(ironDomeRootIssuerPublicKeyPair.PrivateKey),
-            SignatureAlgorithmEnum.SHA256WithRSA);
+            SignatureAlgorithmEnum.Sha256WithRsa);
 
         var response = await mediator.Send(request);
 

@@ -24,7 +24,7 @@ public static class CreateCsrFilepoint
             "CloudBeholder",
             Convert.ToBase64String(subjectPublicKeyPair.PublicKey),
             Encoding.UTF8.GetString(KeyExtension.ConvertToPem(KeyExtension.ParseFromPEMPrivateKey(Encoding.UTF8.GetString(subjectPublicKeyPair.PrivateKey)))),
-            SignatureAlgorithmEnum.SHA256WithRSA.Name,
+            SignatureAlgorithmEnum.Sha256WithRsa.Name,
             csrFileName,
             privateKeyFileName);
 

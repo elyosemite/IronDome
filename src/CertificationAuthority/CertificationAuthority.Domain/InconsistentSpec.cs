@@ -3,9 +3,9 @@ using CertificationAuthority.Domain.Certificate;
 
 namespace CertificationAuthority.Domain;
 
-public class InconsistentSpec : Specification<PKICertificate>
+public class InconsistentSpec : Specification<PkiCertificate>
 {
-    public override bool IsSatisfiedBy(PKICertificate entity)
+    public override bool IsSatisfiedBy(PkiCertificate entity)
     {
         return entity.NotAfter > entity.NotBefore;
     }

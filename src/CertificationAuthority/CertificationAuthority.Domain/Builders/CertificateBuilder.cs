@@ -13,7 +13,7 @@ public class CertificateBuilder : ICertificateBuilder
     private DateTime _notAfter;
     private string _subjectDN = string.Empty;
     private string _publicKey = string.Empty;
-    private SignatureAlgorithmEnum _signatureAlgorithm = SignatureAlgorithmEnum.SHA256WithRSA;
+    private SignatureAlgorithmEnum _signatureAlgorithm = SignatureAlgorithmEnum.Sha256WithRsa;
 
     /// <summary>
     /// It will be useful when it is necessary to reassembly an instance from the database with identifier
@@ -80,7 +80,7 @@ public class CertificateBuilder : ICertificateBuilder
         return this;
     }
 
-    public PKICertificate Build()
+    public PkiCertificate Build()
     {
         if (_isInstanceReassembly)
         {

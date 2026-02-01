@@ -4,9 +4,9 @@ using CertificationAuthority.Domain.ValueObjects;
 
 namespace CertificationAuthority.Domain.Certificate;
 
-//TODO - Cuidado com a obsessão por tipos primitivos
+// TODO - Cuidado com a obsessão por tipos primitivos
 // AggregateRoot com Repository do DDD (Eric Evans e Vaughn Vernon)
-public class PKICertificate : EntityBase<Guid>, ICertificate
+public class PkiCertificate : EntityBase<Guid>, ICertificate
 {
     public IssuerDN IssuerDN { get; }
     public SerialNumber SerialNumber { get; }
@@ -14,9 +14,9 @@ public class PKICertificate : EntityBase<Guid>, ICertificate
     public DateTime NotAfter { get; }
     public SubjectDN SubjectDN { get; }
     public PublicKey PublicKey { get; }
-    public SignatureAlgorithm SignatureAlgorithm { get; } // TODO - "SHA256WithRSA"; Smart Enums do DDD
+    public SignatureAlgorithm SignatureAlgorithm { get; }
 
-    public PKICertificate(string issuerDN, string serialNumber, DateTime notBefore, DateTime notAfter, string subjectDN, string publicKey, SignatureAlgorithmEnum signatureAlgorithm)
+    public PkiCertificate(string issuerDN, string serialNumber, DateTime notBefore, DateTime notAfter, string subjectDN, string publicKey, SignatureAlgorithmEnum signatureAlgorithm)
     {
         Id = Guid.NewGuid();
         NotBefore = notBefore;
@@ -32,7 +32,7 @@ public class PKICertificate : EntityBase<Guid>, ICertificate
         SignatureAlgorithm = new SignatureAlgorithm(signatureAlgorithm);
     }
 
-    public PKICertificate(Guid identifier, string issuerDN, string serialNumber, DateTime notBefore, DateTime notAfter, string subjectDN, string publicKey, SignatureAlgorithmEnum signatureAlgorithm)
+    public PkiCertificate(Guid identifier, string issuerDN, string serialNumber, DateTime notBefore, DateTime notAfter, string subjectDN, string publicKey, SignatureAlgorithmEnum signatureAlgorithm)
     {
         Id = identifier;
         NotBefore = notBefore;

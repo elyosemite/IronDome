@@ -20,7 +20,7 @@ public class Tests
         var notBefore = DateTime.UtcNow;
         var notAfter = DateTime.UtcNow.AddYears(1);
         var subjectDN = "Subject";
-        var signatureAlgorithm = SignatureAlgorithmEnum.SHA256WithRSA;
+        var signatureAlgorithm = SignatureAlgorithmEnum.Sha256WithRsa;
 
         // Act
         var certificate = _certificateFactory.Factory(issuerDN, serialNumber, notBefore, notAfter, subjectDN, _keyPair.PublicKey.Value, signatureAlgorithm);
@@ -49,7 +49,7 @@ public class Tests
         var notBefore = DateTime.UtcNow;
         var notAfter = DateTime.UtcNow.AddYears(1);
         var subjectDN = "Subject";
-        var signatureAlgorithm = SignatureAlgorithmEnum.SHA256WithRSA;
+        var signatureAlgorithm = SignatureAlgorithmEnum.Sha256WithRsa;
 
         // Act
         var certificate = _certificateFactory.Factory(id, issuerDN, serialNumber, notBefore, notAfter, subjectDN, _keyPair.PublicKey.Value, signatureAlgorithm);
@@ -75,7 +75,7 @@ public class Tests
         var notBefore = DateTime.UtcNow;
         var notAfter = DateTime.UtcNow.AddYears(1);
         var subjectDN = "Subject";
-        var signatureAlgorithm = SignatureAlgorithmEnum.SHA256WithRSA;
+        var signatureAlgorithm = SignatureAlgorithmEnum.Sha256WithRsa;
 
         // Act
         var certificate = builder.WithIssuerDN(issuerDN)
@@ -108,7 +108,7 @@ public class Tests
         var notBefore = DateTime.UtcNow;
         var notAfter = DateTime.UtcNow.AddYears(1);
         var subjectDN = "Subject";
-        var signatureAlgorithm = SignatureAlgorithmEnum.SHA256WithRSA;
+        var signatureAlgorithm = SignatureAlgorithmEnum.Sha256WithRsa;
 
         // Act
         var certificate = builder.WithIdentifier(id)
@@ -143,7 +143,7 @@ public class Tests
         var notAfter = DateTime.UtcNow.AddYears(-1); // Invalid: notAfter is before notBefore
         var subjectDN = "CN=Subject";
         var publicKey = "PublicKey";
-        var signatureAlgorithm = SignatureAlgorithmEnum.SHA256WithRSA;
+        var signatureAlgorithm = SignatureAlgorithmEnum.Sha256WithRsa;
 
         // Act & Assert
         Assert.Throws<InvalidOperationException>(() =>

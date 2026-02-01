@@ -14,7 +14,7 @@ namespace CertificationAuthority.Infrastructure;
 
 public static class CertificateGenerator
 {
-    public static byte[] X509CreateCertificate(PKICertificate pkiCertificate, byte[] senderPrivateKey)
+    public static byte[] X509CreateCertificate(PkiCertificate pkiCertificate, byte[] senderPrivateKey)
     {
         var certificate = new X509V3CertificateGenerator();
         certificate.SetSerialNumber(BigInteger.ProbablePrime(120, new SecureRandom()));

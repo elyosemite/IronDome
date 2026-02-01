@@ -13,5 +13,5 @@ public interface ICertificateBuilder
     ICertificateBuilder WithSubjectDN(string subjectDN);
     ICertificateBuilder WithPublicKey(string publicKey);
     ICertificateBuilder WithSignatureAlgorithm(SignatureAlgorithmEnum signatureAlgorithm);
-    PKICertificate Build();
+    PkiCertificate Build();
 }

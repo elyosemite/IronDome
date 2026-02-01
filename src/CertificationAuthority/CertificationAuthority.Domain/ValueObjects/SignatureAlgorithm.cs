@@ -2,7 +2,7 @@
 
 namespace CertificationAuthority.Domain.ValueObjects;
 
-public struct SignatureAlgorithm : IEquatable<SignatureAlgorithm>
+public readonly struct SignatureAlgorithm : IEquatable<SignatureAlgorithm>
 {
     public SignatureAlgorithmEnum Value { get; }
 

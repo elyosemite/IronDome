@@ -1,10 +1,6 @@
 ﻿namespace CertificationAuthority.Domain.Enumerations;
 
-public class SignatureAlgorithmEnum : Enumeration
+public class SignatureAlgorithmEnum(int id, string name) : Enumeration(id, name)
 {
-    public static SignatureAlgorithmEnum SHA256WithRSA = new(1, nameof(SHA256WithRSA));
-
-    public SignatureAlgorithmEnum(int id, string name) : base(id, name)
-    {
-    }
+    public static readonly SignatureAlgorithmEnum Sha256WithRsa = new(1, nameof(Sha256WithRsa));
 }

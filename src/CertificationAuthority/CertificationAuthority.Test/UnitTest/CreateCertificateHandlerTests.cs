@@ -32,11 +32,11 @@ public class CreateCertificateHandlerTests
             NotBefore: DateTime.UtcNow,
             NotAfter: DateTime.UtcNow.AddYears(1),
             PublicKey: Convert.ToBase64String(publicKeyPair.publicKey),
-            SignatureAlgorithm: SignatureAlgorithmEnum.SHA256WithRSA,
+            SignatureAlgorithm: SignatureAlgorithmEnum.Sha256WithRsa,
             SenderPrivateKey: Convert.ToBase64String(ironDomepublicKeyPair.privateKey)
         );
 
-        PKICertificate domainCertificate = new PKICertificateFactory()
+        PkiCertificate domainCertificate = new PKICertificateFactory()
             .Factory(
                 request.IssuerDN,
                 request.SerialNumber,

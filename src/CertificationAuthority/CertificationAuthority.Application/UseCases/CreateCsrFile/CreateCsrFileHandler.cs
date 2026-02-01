@@ -21,12 +21,12 @@ public sealed class CreateCsrFileHandler : IRequestHandler<CreateCsrFileRequest,
     public Task<CreateCsrFileResponse> Handle(CreateCsrFileRequest request, CancellationToken cancellationToken)
     {
         var csr = new Csr(request.SubjectDN, request.PublicKey, request.PrivateKey,
-        SignatureAlgorithmEnum.SHA256WithRSA, request.PublicKeyFilePath, request.PrivateKeyFilePath);
+        SignatureAlgorithmEnum.Sha256WithRsa, request.PublicKeyFilePath, request.PrivateKeyFilePath);
 
         AsymmetricKeyParameter privateKey = KeyExtension.ParseFromPEMPrivateKey(csr.PrivateKey.Value);
         AsymmetricKeyParameter publicKey = KeyExtension.ParseFromPEMPublicKey(csr.PublicKey.Value);
 
-        var subject = new X509Name(csr.SubjectDN.Value);
+        var subject = new X509Name(csr.SubjectDn.Value);
         var signatureFactory = new Asn1SignatureFactory("SHA256WithRSA", privateKey, new SecureRandom());
         var pkcs10 = new Pkcs10CertificationRequest(signatureFactory, subject, publicKey, null);
 
